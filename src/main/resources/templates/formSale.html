@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+    <head>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="../funciones.js"></script>
+
+        <meta charset="UTF-8">
+        <title>Nuevo-Editar</title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand -->
+            <a class="navbar-brand" th:href="@{/}">HULK STORE</a>
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listUser}">USUARIOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listProduct}">PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listSale}">VENTAS</a>
+                </li>
+
+                </li>
+            </ul>
+        </nav>
+
+
+        <div class="container mt-4">
+            <div class="col-ms-6">
+                <form th:action="@{/saveSale}"  method="post">
+                    <div class="card" th:object="${sale}" >
+                        <div class="card-header">
+                            <h3>MODULO VENTA</h3>
+                            <button type="submit" id= "save_sale1" class="btn btn-primary">Guardar</button>
+                            <a class="btn btn-success" th:href="@{/listSale}">Volver</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group" hidden="true">
+                                <label>ID</label>
+                                <input type="text" class="form-control" th:field="*{id}">
+                            </div>                            
+                            <div class="form-group">
+                                <label>Descripción Venta</label>
+                                <input type="text" class="form-control" th:field="*{description}">
+                            </div>
+                            <div class="form-group">
+                                <label>Usuario Venta</label>
+                                <select th:field="*{user}" class="form-control">
+
+                                    <option th:each="per : ${users}" th:value="${per.id}" th:text="${per.userName}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Iva Venta</label>
+                                <input type="number" class="form-control" th:field="*{tasa_iva}"  id="iva_venta">                             
+                            </div>
+
+                            <h4>PRODUCTOS</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Nombre Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each=" u : ${products}">
+                                        <td th:text="${u.id}"></td>
+                                        <td th:text="${u.name}"></td>
+                                        <td th:text="${u.stock}"></td>
+                                        <td th:text="${u.price}"></td>
+                                        <td>
+                                            <a class="btn btn-info" th:onclick="add([[${u}]])" style="color: white;">Agregar</a>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                            <h4>CARRITO</h4>
+                            <table class="table table-bordered" >
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre Producto</th>
+                                        <th scope="col" class="text-right">Cantidad</th>
+                                        <th scope="col" class="text-right">Precio</th>
+                                        <th scope="col" class="text-right">Total</th>
+                                        <th scope="col">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myTable" th:object="${sm}">
+
+                                </tbody>
+                            </table> 
+                            <table class="table table-bordered">
+
+                                <tbody>
+
+                                    <tr>
+                                        <th>SUB TOTAL GENERAL</th>
+                                        <td id="sub_total_general" class="text-right"></td>
+                                        <td hidden="true"><input type="text" class="form-control" id="arr_items" th:field="${sm.name_item}"></td>
+                                        <td hidden="true"><input type="text" class="form-control" id="arr_items_del" th:field="${sm.desc_item}"></td>
+
+                                        <td hidden="true"><input type="number" class="form-control" id="sub_total_hidden" th:field="*{sub_total}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>IVA GENERAL</th>
+                                        <td id="iva_general" class="text-right"></td>
+                                        <td hidden="true"><input type="number" class="form-control" id="iva_general_hidden" th:field="*{iva}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>TOTAL GENERAL</th>
+                                        <td id="total_general" class="text-right"></td>
+                                        <td hidden="true"><input type="number" class="form-control" id="total_general_hidden" th:field="*{total}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="card-footer">
+                                <button type="submit" id= "save_sale" class="btn btn-primary">Guardar</button>
+                                <a class="btn btn-success" th:href="@{/listSale}">Volver</a>
+                            </div>
+                        </div>
+
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

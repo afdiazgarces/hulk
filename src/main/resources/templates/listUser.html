@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+    <head>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="funciones.js"></script>
+        <meta charset="UTF-8"> 
+        <title></title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand -->
+            <a class="navbar-brand" th:href="@{/}">HULK STORE</a>
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listUser}">USUARIOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listProduct}">PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listSale}">VENTAS</a>
+                </li>
+
+                </li>
+            </ul>
+        </nav>
+
+
+        <div class="container mt-4">
+            <a class="btn btn-primary" th:href="@{/newUser}">Nuevo</a>
+            <br><br>
+            <h3>LISTA DE USUARIOS</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Nombre De Usuario</th>
+                        <th scope="col">Clave</th>
+                        <th scope="col">Tarjeta De Credito</th>
+                        <th scope="col">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each=" u : ${users}">
+                        <td th:text="${u.id}"></td>
+                        <td th:text="${u.name}"></td>
+                        <td th:text="${u.lastName}"></td>
+                        <td th:text="${u.userName}"></td>
+                        <td th:text="${u.password}" ></td>
+                        <td th:text="${u.creditCard}" ></td>
+                        <td>
+                            <a class="btn btn-success" th:href="@{/updateUser/} + ${u.id}">Modificar</a>
+                            <!--<a class="btn btn-danger" th:onclick="eliminar([[${u.id}]],'User')" style="color: white;">Borrar</a>-->
+
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

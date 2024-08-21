@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+    <head>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="funciones.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+        <meta charset="UTF-8">
+        <title>Nuevo-Editar</title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand -->
+            <a class="navbar-brand" th:href="@{/}">HULK STORE</a>
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listUser}">USUARIOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listProduct}">PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listSale}">VENTAS</a>
+                </li>
+
+                </li>
+            </ul>
+        </nav>
+
+
+        <div class="container mt-4">
+            <div class="col-ms-6">
+                <form th:action="@{/saveProduct}" th:object="${product}" method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>MODULO PRODUCTO</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group" hidden="true">
+                                <label>ID</label>
+                                <input type="text" class="form-control" th:field="*{id}">
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" th:field="*{name}">
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control" th:field="*{description}">
+                            </div>
+                            <div class="form-group">
+                                <label>Precio</label>
+                                <input type="number" class="form-control" th:field="*{price}">
+                            </div>
+                            <div class="form-group">
+                                <label>Cantidad</label>
+                                <input type="number" class="form-control" th:field="*{stock}">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a class="btn btn-success" th:href="@{/listUser}">Volver</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

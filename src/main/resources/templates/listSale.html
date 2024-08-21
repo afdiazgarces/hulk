@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+    <head>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="funciones.js"></script>
+        <meta charset="UTF-8"> 
+        <title></title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand -->
+            <a class="navbar-brand" th:href="@{/}">HULK STORE</a>
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listUser}">USUARIOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listProduct}">PRODUCTOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listSale}">VENTAS</a>
+                </li>
+
+                </li>
+            </ul>
+        </nav>
+
+
+        <div class="container mt-4">
+            <a class="btn btn-primary" th:href="@{/newSale}">Nuevo</a>
+            <br><br>
+            <h3>LISTA DE VENTAS</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Consecutivo</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col" class="text-right">Tasa Iva</th>
+                        <th scope="col" class="text-right">Sub Total</th>
+                        <th scope="col" class="text-right">Iva</th>
+                        <th scope="col" class="text-right">Total</th>
+                        <th scope="col">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each=" u : ${sales}">
+                        <td th:text="${u.id}"></td>
+                        <td th:text="${u.name}"></td>
+                        <td th:text="${u.description}"></td>
+                        <td th:text="${u.user.userName}"></td>
+                        <td th:text="${u.tasa_iva}" class="text-right"></td>
+                        <td th:text="${u.sub_total}" class="text-right"></td>
+                        <td th:text="${u.iva}" class="text-right"></td>
+                        <td th:text="${u.total}" class="text-right"></td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/detailSale/} + ${u.id}">Datalle</a>
+                            <a class="btn btn-success" th:href="@{/updateSale/} + ${u.id}">Modificar</a>
+                            <!--<a class="btn btn-danger" th:onclick="eliminar([[${u.id}]],'Sale')" style="color: white;">Borrar</a>-->
+
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
